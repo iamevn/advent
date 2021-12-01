@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://www.unison-lang.org/css/styles.css">
+    <style>
+body {
+  margin : 2em;
+}
+    </style>
+  </head>
+  <body>
+
+<article class="unison-doc">
+	<section>
+		<h1><span class="group"><span class="join"><a href="https://adventofcode.com/2021/day/1" rel="noopener" class="named-link" target="_blank"><span class="span"><span class="word">Day 1 of Advent of Code 2021</span></span></a><span class="word">.</span></span></span></h1>
+		<section>
+			<h2><span class="span"><span class="word">Part 1</span></span></h2>
+			<p><span class="span"><span class="word">Given a series of numbers, part 1 asks for a count of how many numbers are greater than the previous number.</span></span>
+			</p>
+			<p><span class="span"><span class="word">We&#39;re given an example and the expected result for this example:</span></span>
+			</p>
+			<div class="folded-sources">
+				<details open="open" class="folded rich source">
+					<summary class="folded-content folded-summary"><pre><code><span class="syntax"><span data-ref="#vf168d3r3t1sq4dug4apt6ng1in7a76s8sere4bc3oofc21ki3k4depin6ttd4nsfie8om4mk7c8ourq4orvh6b5d5jd586slck7pm8" class="local-term term-reference" data-ref-type="term">measurements</span><span class="blank"> </span><span class="type-ascription-colon">: </span><span class="delimeter-char">[</span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span><span class="delimeter-char">]</span></span></code></pre></summary>
+					<div class="folded-content folded-details"><pre><code><span class="syntax"><span class="hash-qualifier">measurements</span><span class="type-ascription-colon"> :</span><span class="blank"> </span><span class="delimeter-char">[</span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span><span class="delimeter-char">]</span><span class="blank">
+</span><span class="hash-qualifier">measurements</span><span class="binding-equals"> =</span><span class="blank"> </span><span class="delimeter-char">[</span><span class="numeric-literal">199</span><span class="delimeter-char">,</span><span class="blank"> </span><span class="numeric-literal">200</span><span class="delimeter-char">,</span><span class="blank"> </span><span class="numeric-literal">208</span><span class="delimeter-char">,</span><span class="blank"> </span><span class="numeric-literal">210</span><span class="delimeter-char">,</span><span class="blank"> </span><span class="numeric-literal">200</span><span class="delimeter-char">,</span><span class="blank"> </span><span class="numeric-literal">207</span><span class="delimeter-char">,</span><span class="blank"> </span><span class="numeric-literal">240</span><span class="delimeter-char">,</span><span class="blank"> </span><span class="numeric-literal">269</span><span class="delimeter-char">,</span><span class="blank"> </span><span class="numeric-literal">260</span><span class="delimeter-char">,</span><span class="blank"> </span><span class="numeric-literal">263</span><span class="delimeter-char">]</span></span></code></pre></div>
+				</details>
+				<details open="open" class="folded rich source">
+					<summary class="folded-content folded-summary"><pre><code><span class="syntax"><span data-ref="#3182fqhojo53f312m8v3oih1i7acc03k55kf4mtjj537hmdk492v6j67d4ohqum5l31ilt9cb15bmso58le925j56noet6rm5jmdpho" class="local-term term-reference" data-ref-type="term">increases</span><span class="blank"> </span><span class="type-ascription-colon">: </span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span></span></code></pre></summary>
+					<div class="folded-content folded-details"><pre><code><span class="syntax"><span class="hash-qualifier">increases</span><span class="type-ascription-colon"> :</span><span class="blank"> </span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span><span class="blank">
+</span><span class="hash-qualifier">increases</span><span class="binding-equals"> =</span><span class="blank"> </span><span class="numeric-literal">7</span></span></code></pre></div>
+				</details>
+			</div>
+			<p><span class="span"><span class="word">We can write a function to do so recursively:</span></span>
+			</p>
+			<div class="folded-sources">
+				<details open="open" class="folded rich source">
+					<summary class="folded-content folded-summary"><pre><code><span class="syntax"><span data-ref="#q2afb20ajv5nesi1le9ak2id70p8gg80udi4ll46eaqns8kulosld05v4t4sfslqgpum4n729g9l01m060vet4ad705vens5fegu6e0" class="local-term term-reference" data-ref-type="term">countIncreases</span><span class="blank"> </span><span class="type-ascription-colon">: </span><span class="delimeter-char">[</span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span><span class="delimeter-char">]</span><span class="blank"> </span><span class="type-operator"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span></span></code></pre></summary>
+					<div class="folded-content folded-details"><pre><code><span class="syntax"><span class="hash-qualifier">countIncreases</span><span class="type-ascription-colon"> :</span><span class="blank"> </span><span class="delimeter-char">[</span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span><span class="delimeter-char">]</span><span class="blank"> </span><span class="type-operator"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span><span class="blank">
+</span><span class="hash-qualifier">countIncreases</span><span class="binding-equals"> =</span><span class="blank">
+</span><span class="blank">  </span><span class="use-keyword">use </span><span class="use-prefix">Nat</span><span class="blank"> </span><span class="use-suffix">&lt;</span><span class="blank">
+</span><span class="blank">  </span><span class="use-keyword">use </span><span class="use-prefix">List</span><span class="blank"> </span><span class="use-suffix">+:</span><span class="blank">
+</span><span class="blank">  </span><span class="hash-qualifier">go</span><span class="type-ascription-colon"> :</span><span class="blank"> </span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span><span class="blank"> </span><span class="type-operator"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span class="delimeter-char">[</span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span><span class="delimeter-char">]</span><span class="blank"> </span><span class="type-operator"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span><span class="blank">
+</span><span class="blank">  </span><span class="hash-qualifier">go</span><span class="blank"> </span><span class="var">total</span><span class="binding-equals"> =</span><span class="blank"> </span><span class="control-keyword">cases</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="delimeter-char">[</span><span class="var">a</span><span class="delimeter-char">, </span><span class="var">b</span><span class="delimeter-char">]</span><span class="blank"> </span><span class="op concat">++</span><span class="blank"> </span><span class="var">rest</span><span class="blank"> </span><span class="blank">
+</span><span class="blank">      </span><span class="delimeter-char">|</span><span class="blank"> </span><span class="var">a</span><span class="blank"> </span><span data-ref="##Nat.&lt;" class="term-reference" data-ref-type="term">&lt;</span><span class="blank"> </span><span class="var">b</span><span class="blank">     </span><span class="control-keyword"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span class="var">go</span><span class="blank"> </span><span class="parenthesis">(</span><span data-ref="##Nat.increment" class="term-reference" data-ref-type="term"><span class="fqn"><span class="segment">Nat</span><span class="sep ">.</span><span class="segment">increment</span></span></span><span class="blank"> </span><span class="var">total</span><span class="parenthesis">)</span><span class="blank"> </span><span class="parenthesis">(</span><span class="var">b</span><span class="blank"> </span><span data-ref="##List.cons" class="term-reference" data-ref-type="term">+:</span><span class="blank"> </span><span class="var">rest</span><span class="parenthesis">)</span><span class="blank">
+</span><span class="blank">      </span><span class="delimeter-char">|</span><span class="control-keyword"> otherwise</span><span class="blank"> </span><span class="control-keyword"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span class="var">go</span><span class="blank"> </span><span class="var">total</span><span class="blank"> </span><span class="parenthesis">(</span><span class="var">b</span><span class="blank"> </span><span data-ref="##List.cons" class="term-reference" data-ref-type="term">+:</span><span class="blank"> </span><span class="var">rest</span><span class="parenthesis">)</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="delimeter-char">_</span><span class="blank"> </span><span class="control-keyword"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span class="var">total</span><span class="blank">
+</span><span class="blank">  </span><span class="var">go</span><span class="blank"> </span><span class="numeric-literal">0</span></span></code></pre></div>
+				</details>
+			</div>
+			<p><span class="span"><span class="word">And check that it produces the expected result for the example:</span></span>
+			</p>
+			<div class="source rich eval"><pre><code><div><span class="syntax"><span data-ref="#q2afb20ajv5nesi1le9ak2id70p8gg80udi4ll46eaqns8kulosld05v4t4sfslqgpum4n729g9l01m060vet4ad705vens5fegu6e0" class="local-term term-reference" data-ref-type="term">countIncreases</span><span class="blank"> </span><span data-ref="#vf168d3r3t1sq4dug4apt6ng1in7a76s8sere4bc3oofc21ki3k4depin6ttd4nsfie8om4mk7c8ourq4orvh6b5d5jd586slck7pm8" class="local-term term-reference" data-ref-type="term">measurements</span><span class="blank"> </span><span data-ref="##Nat.==" class="term-reference" data-ref-type="term"><span class="fqn"><span class="segment">Nat</span><span class="sep ">.</span><span class="segment">==</span></span></span><span class="blank"> </span><span data-ref="#3182fqhojo53f312m8v3oih1i7acc03k55kf4mtjj537hmdk492v6j67d4ohqum5l31ilt9cb15bmso58le925j56noet6rm5jmdpho" class="local-term term-reference" data-ref-type="term">increases</span></span><div class="result">⧨<div><span class="syntax"><span class="boolean-literal">true</span></span></div></div></div></code></pre></div>
+			<p><span class="span"><span class="word">I wrote some quick helpers to read lines from a file:</span></span>
+			</p>
+			<p><span class="span"><div class="folded-sources"><details open="open" class="folded rich source"><summary class="folded-content folded-summary"><pre><code><span class="syntax"><span data-ref="#a86mah0vsjc425lgc0fjjkcc9hch191qg309d7blq9v4vglt4655npim39ovi455ag6pls08n7pq0dcqbdismgbfeqlohn0fheoirso" class="local-term term-reference" data-ref-type="term">getLines</span><span class="blank"> </span><span class="type-ascription-colon">: </span><span data-ref="##Handle" class="type-reference" data-ref-type="type">Handle</span><span class="blank"> </span><span class="type-operator"><span class="arrow">-&gt;</span></span><span class="ability-braces">{</span><span data-ref="##IO" class="type-reference" data-ref-type="type">IO</span><span class="blank">,</span><span class="blank"> </span><span data-ref="#0gbskfd2lhpn1ooc6c397dohqjefpe4d2silhafm8s93e4372lng2i8bcksl9gfe3qnfjisbhdmnc7dill5j7er1t6a1ttb2cvl2rpo" class="type-reference" data-ref-type="type">Exception</span><span class="ability-braces">}</span><span class="blank"> </span><span class="delimeter-char">[</span><span data-ref="##Text" class="type-reference" data-ref-type="type">Text</span><span class="delimeter-char">]</span></span>
+				</code>
+				</pre>
+				</summary>
+				<div class="folded-content folded-details"><pre><code><span class="syntax"><span class="hash-qualifier">getLines</span><span class="type-ascription-colon"> :</span><span class="blank"> </span><span data-ref="##Handle" class="type-reference" data-ref-type="type">Handle</span><span class="blank"> </span><span class="type-operator"><span class="arrow">-&gt;</span></span><span class="ability-braces">{</span><span data-ref="##IO" class="type-reference" data-ref-type="type">IO</span><span class="blank">,</span><span class="blank"> </span><span data-ref="#0gbskfd2lhpn1ooc6c397dohqjefpe4d2silhafm8s93e4372lng2i8bcksl9gfe3qnfjisbhdmnc7dill5j7er1t6a1ttb2cvl2rpo" class="type-reference" data-ref-type="type">Exception</span><span class="ability-braces">}</span><span class="blank"> </span><span class="delimeter-char">[</span><span data-ref="##Text" class="type-reference" data-ref-type="type">Text</span><span class="delimeter-char">]</span><span class="blank">
+</span><span class="hash-qualifier">getLines</span><span class="blank"> </span><span class="var">h</span><span class="binding-equals"> =</span><span class="blank">
+</span><span class="blank">  </span><span class="hash-qualifier">getLinesRec</span><span class="type-ascription-colon"> :</span><span class="blank"> </span><span class="delimeter-char">[</span><span data-ref="##Text" class="type-reference" data-ref-type="type">Text</span><span class="delimeter-char">]</span><span class="blank"> </span><span class="type-operator"><span class="arrow">-&gt;</span></span><span class="ability-braces">{</span><span data-ref="##IO" class="type-reference" data-ref-type="type">IO</span><span class="blank">,</span><span class="blank"> </span><span data-ref="#0gbskfd2lhpn1ooc6c397dohqjefpe4d2silhafm8s93e4372lng2i8bcksl9gfe3qnfjisbhdmnc7dill5j7er1t6a1ttb2cvl2rpo" class="type-reference" data-ref-type="type">Exception</span><span class="ability-braces">}</span><span class="blank"> </span><span class="delimeter-char">[</span><span data-ref="##Text" class="type-reference" data-ref-type="type">Text</span><span class="delimeter-char">]</span><span class="blank">
+</span><span class="blank">  </span><span class="hash-qualifier">getLinesRec</span><span class="blank"> </span><span class="var">acc</span><span class="binding-equals"> =</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="control-keyword">if</span><span class="blank"> </span><span data-ref="#2p94sost7k7a3vrbk1naaj5f060nah2en9hmc7idfi5fd9226bunhbrvafpcg054i1mda2mhqfhrdjoac49vird2ckf0eieftk4rd50" class="term-reference" data-ref-type="term">isFileEOF</span><span class="blank"> </span><span class="var">h</span><span class="control-keyword"> then</span><span class="blank"> </span><span class="var">acc</span><span class="blank"> </span><span class="control-keyword">else</span><span class="blank"> </span><span class="var">getLinesRec</span><span class="blank"> </span><span class="parenthesis">(</span><span class="var">acc</span><span class="blank"> </span><span data-ref="##List.snoc" class="term-reference" data-ref-type="term">:+</span><span class="blank"> </span><span data-ref="#0ulu5vgqspi2h7s0k47p0tfjufbktudkfgehn2sfcanoglilu3p6ekuudnli4mas53uafncv51dc7076d1jgisctve6tfn3sbscd2g8" class="term-reference" data-ref-type="term"><span class="fqn"><span class="segment">io</span><span class="sep ">.</span><span class="segment">getLine</span></span></span><span class="blank"> </span><span class="var">h</span><span class="parenthesis">)</span><span class="blank">
+</span><span class="blank">  </span><span class="var">getLinesRec</span><span class="blank"> </span><span class="delimeter-char">[</span><span class="delimeter-char">]</span></span></code></pre></div>
+				</details>
+				</div>
+				<div class="folded-sources">
+					<details open="open" class="folded rich source">
+						<summary class="folded-content folded-summary"><pre><code><span class="syntax"><span data-ref="#uisvurj4dqdvnbql2i6562fnau5mo7sg3i94o21rl3n9lbehusat7n38ga480qokql4hb8s9ns8i1n4amc67tcg8sudq1vr9dsp0v5g" class="local-term term-reference" data-ref-type="term">readLines</span><span class="blank"> </span><span class="type-ascription-colon">: </span><span data-ref="#53ai5nivms98htel68e7n79oeto45u3h59ho0b59rt5qinvo197e8hc58qfcmatanfvunmcn6oavseb3e926mg102n72ju3nd8b1uso" class="type-reference" data-ref-type="type">FilePath</span><span class="blank"> </span><span class="type-operator"><span class="arrow">-&gt;</span></span><span class="ability-braces">{</span><span data-ref="##IO" class="type-reference" data-ref-type="type">IO</span><span class="blank">,</span><span class="blank"> </span><span data-ref="#0gbskfd2lhpn1ooc6c397dohqjefpe4d2silhafm8s93e4372lng2i8bcksl9gfe3qnfjisbhdmnc7dill5j7er1t6a1ttb2cvl2rpo" class="type-reference" data-ref-type="type">Exception</span><span class="ability-braces">}</span><span class="blank"> </span><span class="delimeter-char">[</span><span data-ref="##Text" class="type-reference" data-ref-type="type">Text</span><span class="delimeter-char">]</span></span></code></pre></summary>
+						<div class="folded-content folded-details"><pre><code><span class="syntax"><span class="hash-qualifier">readLines</span><span class="type-ascription-colon"> :</span><span class="blank"> </span><span data-ref="#53ai5nivms98htel68e7n79oeto45u3h59ho0b59rt5qinvo197e8hc58qfcmatanfvunmcn6oavseb3e926mg102n72ju3nd8b1uso" class="type-reference" data-ref-type="type">FilePath</span><span class="blank"> </span><span class="type-operator"><span class="arrow">-&gt;</span></span><span class="ability-braces">{</span><span data-ref="##IO" class="type-reference" data-ref-type="type">IO</span><span class="blank">,</span><span class="blank"> </span><span data-ref="#0gbskfd2lhpn1ooc6c397dohqjefpe4d2silhafm8s93e4372lng2i8bcksl9gfe3qnfjisbhdmnc7dill5j7er1t6a1ttb2cvl2rpo" class="type-reference" data-ref-type="type">Exception</span><span class="ability-braces">}</span><span class="blank"> </span><span class="delimeter-char">[</span><span data-ref="##Text" class="type-reference" data-ref-type="type">Text</span><span class="delimeter-char">]</span><span class="blank">
+</span><span class="hash-qualifier">readLines</span><span class="blank"> </span><span class="var">fp</span><span class="binding-equals"> =</span><span class="blank">
+</span><span class="blank">  </span><span class="hash-qualifier">f</span><span class="binding-equals"> =</span><span class="blank"> </span><span data-ref="#8cg371o8umnq62svh6ukltnoq2lf92rfrfpqrpqob635chpj0ln9mvrv1qtuvt7j38faagafivku988beqsrrv6f0k0ei2ds063jdb0" class="term-reference" data-ref-type="term">openFile</span><span class="blank"> </span><span class="var">fp</span><span class="blank"> </span><span data-ref="#68bqm7jmbb9rinbc5gv49rmj6a5orflpgje3k55goujal2cq5r9f96m9hkhapuuphvbd2n76vc36aiegk1v3bbc5uelfsnjp9hvl8u8#d0" class="term-reference" data-ref-type="term">Read</span><span class="blank">
+</span><span class="blank">  </span><span data-ref="#a86mah0vsjc425lgc0fjjkcc9hch191qg309d7blq9v4vglt4655npim39ovi455ag6pls08n7pq0dcqbdismgbfeqlohn0fheoirso" class="local-term term-reference" data-ref-type="term">getLines</span><span class="blank"> </span><span class="var">f</span></span></code></pre></div>
+					</details>
+				</div>
+				<div class="folded-sources">
+					<details open="open" class="folded rich source">
+						<summary class="folded-content folded-summary"><pre><code><span class="syntax"><span data-ref="#sof4q38padq59vc50mcb92s4cs7u42b0f0edr5ugq3jhhsjeavk6647g2jurss0d0778154v1h695arjmfvkimt1gptattb43t2rl38" class="local-term term-reference" data-ref-type="term">fileLines</span><span class="blank"> </span><span class="type-ascription-colon">: </span><span data-ref="##Text" class="type-reference" data-ref-type="type">Text</span><span class="blank"> </span><span class="type-operator"><span class="arrow">-&gt;</span></span><span class="ability-braces">{</span><span data-ref="##IO" class="type-reference" data-ref-type="type">IO</span><span class="blank">,</span><span class="blank"> </span><span data-ref="#0gbskfd2lhpn1ooc6c397dohqjefpe4d2silhafm8s93e4372lng2i8bcksl9gfe3qnfjisbhdmnc7dill5j7er1t6a1ttb2cvl2rpo" class="type-reference" data-ref-type="type">Exception</span><span class="ability-braces">}</span><span class="blank"> </span><span class="delimeter-char">[</span><span data-ref="##Text" class="type-reference" data-ref-type="type">Text</span><span class="delimeter-char">]</span></span></code></pre></summary>
+						<div class="folded-content folded-details"><pre><code><span class="syntax"><span class="hash-qualifier">fileLines</span><span class="type-ascription-colon"> :</span><span class="blank"> </span><span data-ref="##Text" class="type-reference" data-ref-type="type">Text</span><span class="blank"> </span><span class="type-operator"><span class="arrow">-&gt;</span></span><span class="ability-braces">{</span><span data-ref="##IO" class="type-reference" data-ref-type="type">IO</span><span class="blank">,</span><span class="blank"> </span><span data-ref="#0gbskfd2lhpn1ooc6c397dohqjefpe4d2silhafm8s93e4372lng2i8bcksl9gfe3qnfjisbhdmnc7dill5j7er1t6a1ttb2cvl2rpo" class="type-reference" data-ref-type="type">Exception</span><span class="ability-braces">}</span><span class="blank"> </span><span class="delimeter-char">[</span><span data-ref="##Text" class="type-reference" data-ref-type="type">Text</span><span class="delimeter-char">]</span><span class="blank">
+</span><span class="hash-qualifier">fileLines</span><span class="binding-equals"> =</span><span class="blank"> </span><span data-ref="#uisvurj4dqdvnbql2i6562fnau5mo7sg3i94o21rl3n9lbehusat7n38ga480qokql4hb8s9ns8i1n4amc67tcg8sudq1vr9dsp0v5g" class="local-term term-reference" data-ref-type="term">readLines</span><span class="blank"> </span><span data-ref="#0hoa6tis7604fo17o91lfjflsvd843uvm7sueu5rfqqn5nbneajoh9fldfbmmjnhh1h2690ktfflrbb96q9lksesuh3t5amcc1ph92g" class="term-reference" data-ref-type="term"><span class="fqn"><span class="segment">.</span></span></span><span class="blank"> </span><span data-ref="#53ai5nivms98htel68e7n79oeto45u3h59ho0b59rt5qinvo197e8hc58qfcmatanfvunmcn6oavseb3e926mg102n72ju3nd8b1uso#d0" class="term-reference" data-ref-type="term">FilePath</span></span></code></pre></div>
+					</details>
+				</div>
+				</span>
+			</p>
+			<p><span class="span"><span class="word">And we can use</span><code class="inline-code rich source"><span class="syntax"><span data-ref="#fd552lhjlav2o9hmmgmbidhoqscvlu358mst81g8umfkk7q4h0koi999e852kqjfalc52fpj95l57j1soq55if0hgrkf57pjdgg2vo8" class="term-reference" data-ref-type="term">getArgs</span></span></code><span class="word">to pass in our input file to a funcion with the right</span><span class="group"><span class="join"><a href="https://www.unisonweb.org/docs/abilities/" rel="noopener" class="named-link" target="_blank"><span class="word">abilities</span></a><span class="word">.</span></span>
+				</span>
+				</span>
+			</p>
+			<div class="folded-sources">
+				<details open="open" class="folded rich source">
+					<summary class="folded-content folded-summary"><pre><code><span class="syntax"><span data-ref="#khn86cum1vl2jjindckhse7i9s7nmp20c9a00ralna34t16jbjjldu79vk2qsddc5uek12s7ivsto8o39s4k5aqh36k26ei1j8rcfl0" class="local-term term-reference" data-ref-type="term">part1</span><span class="blank"> </span><span class="type-ascription-colon">: </span><span class="delay-force-char">&#39;</span><span class="ability-braces">{</span><span data-ref="##IO" class="type-reference" data-ref-type="type">IO</span><span class="blank">,</span><span class="blank"> </span><span data-ref="#0gbskfd2lhpn1ooc6c397dohqjefpe4d2silhafm8s93e4372lng2i8bcksl9gfe3qnfjisbhdmnc7dill5j7er1t6a1ttb2cvl2rpo" class="type-reference" data-ref-type="type">Exception</span><span class="ability-braces">}</span><span class="blank"> </span><span class="unit">()</span></span></code></pre></summary>
+					<div class="folded-content folded-details"><pre><code><span class="syntax"><span class="hash-qualifier">part1</span><span class="type-ascription-colon"> :</span><span class="blank"> </span><span class="delay-force-char">&#39;</span><span class="ability-braces">{</span><span data-ref="##IO" class="type-reference" data-ref-type="type">IO</span><span class="blank">,</span><span class="blank"> </span><span data-ref="#0gbskfd2lhpn1ooc6c397dohqjefpe4d2silhafm8s93e4372lng2i8bcksl9gfe3qnfjisbhdmnc7dill5j7er1t6a1ttb2cvl2rpo" class="type-reference" data-ref-type="type">Exception</span><span class="ability-braces">}</span><span class="blank"> </span><span class="unit">()</span><span class="blank">
+</span><span class="hash-qualifier">part1</span><span class="binding-equals"> =</span><span class="blank">
+</span><span class="blank">  </span><span class="delay-force-char">&#39;</span><span class="control-keyword">match </span><span class="delay-force-char">!</span><span data-ref="#fd552lhjlav2o9hmmgmbidhoqscvlu358mst81g8umfkk7q4h0koi999e852kqjfalc52fpj95l57j1soq55if0hgrkf57pjdgg2vo8" class="term-reference" data-ref-type="term">getArgs</span><span class="control-keyword"> with</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="delimeter-char">[</span><span class="var">filename</span><span class="delimeter-char">]</span><span class="blank"> </span><span class="control-keyword"><span class="arrow">-&gt;</span></span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="use-keyword">use </span><span class="use-prefix">Text</span><span class="blank"> </span><span class="use-suffix">++</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span data-ref="#sof4q38padq59vc50mcb92s4cs7u42b0f0edr5ugq3jhhsjeavk6647g2jurss0d0778154v1h695arjmfvkimt1gptattb43t2rl38" class="local-term term-reference" data-ref-type="term">fileLines</span><span class="blank"> </span><span class="var">filename</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span data-ref="#cl34qtqcm0rqi571el9sbgtfs9m7dn3iqbogm9be1j2ieht73u2hbr6km9r0c4ahm2u9s8ebdcgk9hbm50orb5stqq2aou6vmb78pg0" class="term-reference" data-ref-type="term">|&gt;</span><span class="blank"> </span><span data-ref="#sgdvo1kgcndsnkucqhcr5gm0dsen6tk3njukcbbl0i6alpbh1no94douq5ilnjjtgqrr2t53e5fj2u007hnpvuodnunstjvouic2u0g" class="term-reference" data-ref-type="term">filterMap</span><span class="blank"> </span><span data-ref="##Nat.fromText" class="term-reference" data-ref-type="term"><span class="fqn"><span class="segment">Nat</span><span class="sep ">.</span><span class="segment">fromText</span></span></span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span data-ref="#cl34qtqcm0rqi571el9sbgtfs9m7dn3iqbogm9be1j2ieht73u2hbr6km9r0c4ahm2u9s8ebdcgk9hbm50orb5stqq2aou6vmb78pg0" class="term-reference" data-ref-type="term">|&gt;</span><span class="blank"> </span><span data-ref="#q2afb20ajv5nesi1le9ak2id70p8gg80udi4ll46eaqns8kulosld05v4t4sfslqgpum4n729g9l01m060vet4ad705vens5fegu6e0" class="local-term term-reference" data-ref-type="term">countIncreases</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span data-ref="#cl34qtqcm0rqi571el9sbgtfs9m7dn3iqbogm9be1j2ieht73u2hbr6km9r0c4ahm2u9s8ebdcgk9hbm50orb5stqq2aou6vmb78pg0" class="term-reference" data-ref-type="term">|&gt;</span><span class="blank"> </span><span data-ref="##Nat.toText" class="term-reference" data-ref-type="term"><span class="fqn"><span class="segment">Nat</span><span class="sep ">.</span><span class="segment">toText</span></span></span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span data-ref="#cl34qtqcm0rqi571el9sbgtfs9m7dn3iqbogm9be1j2ieht73u2hbr6km9r0c4ahm2u9s8ebdcgk9hbm50orb5stqq2aou6vmb78pg0" class="term-reference" data-ref-type="term">|&gt;</span><span class="blank"> </span><span class="parenthesis">(</span><span data-ref="##Text.++" class="term-reference" data-ref-type="term">++</span><span class="parenthesis">)</span><span class="blank"> </span><span class="text-literal">&quot;Part 1: &quot;</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span data-ref="#cl34qtqcm0rqi571el9sbgtfs9m7dn3iqbogm9be1j2ieht73u2hbr6km9r0c4ahm2u9s8ebdcgk9hbm50orb5stqq2aou6vmb78pg0" class="term-reference" data-ref-type="term">|&gt;</span><span class="blank"> </span><span data-ref="#cbnnbr9uj7qo2j3k3agqb5vbjamd0fhmmk5a8onsk0gmt4rheh7rvtc8hnettd8239nf539ji9jbp3kjg458fng1rqun5gn9qe3l70o" class="term-reference" data-ref-type="term">printLine</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="delimeter-char">_</span><span class="blank">          </span><span class="control-keyword"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span data-ref="#cbnnbr9uj7qo2j3k3agqb5vbjamd0fhmmk5a8onsk0gmt4rheh7rvtc8hnettd8239nf539ji9jbp3kjg458fng1rqun5gn9qe3l70o" class="term-reference" data-ref-type="term">printLine</span><span class="blank"> </span><span class="text-literal">&quot;give one argument with input filename&quot;</span></span></code></pre></div>
+				</details>
+			</div>
+			<p><span class="span"><span class="word">If you&#39;re familiar with Clojure,</span><code class="inline-code rich source"><span class="syntax"><span data-ref="#cl34qtqcm0rqi571el9sbgtfs9m7dn3iqbogm9be1j2ieht73u2hbr6km9r0c4ahm2u9s8ebdcgk9hbm50orb5stqq2aou6vmb78pg0" class="term-reference" data-ref-type="term">|&gt;</span></span></code><span class="word">is similar to its</span><a href="https://clojuredocs.org/clojure.core/-%3E%3E" rel="noopener" class="named-link" target="_blank"><span class="word">-&gt;&gt;</span></a><span class="word">macro. It lets us more clearly write composed functions without needing a bunch of parentheses. The results of {fileLines filename} are passed as an argument to {filterMap Nat.fromText} and the result of that is passed to</span><code class="inline-code rich source"><span class="syntax"><span data-ref="#q2afb20ajv5nesi1le9ak2id70p8gg80udi4ll46eaqns8kulosld05v4t4sfslqgpum4n729g9l01m060vet4ad705vens5fegu6e0" class="local-term term-reference" data-ref-type="term">countIncreases</span></span></code><span class="word">and so on.</span></span>
+			</p>
+			<p><span class="span"><span class="word">We use</span><code class="inline-code rich source"><span class="syntax"><span data-ref="#sgdvo1kgcndsnkucqhcr5gm0dsen6tk3njukcbbl0i6alpbh1no94douq5ilnjjtgqrr2t53e5fj2u007hnpvuodnunstjvouic2u0g" class="term-reference" data-ref-type="term">filterMap</span></span></code><span class="word">because</span><code class="inline-code rich source"><span class="syntax"><span data-ref="##Nat.fromText" class="term-reference" data-ref-type="term"><span class="fqn"><span class="segment">Nat</span><span class="sep ">.</span><span class="segment">fromText</span></span></span></span></code><span class="word">returns an {Optional Nat}.</span><code class="inline-code rich source"><span class="syntax"><span data-ref="#sgdvo1kgcndsnkucqhcr5gm0dsen6tk3njukcbbl0i6alpbh1no94douq5ilnjjtgqrr2t53e5fj2u007hnpvuodnunstjvouic2u0g" class="term-reference" data-ref-type="term">filterMap</span></span></code><span class="word">will give us a {[Nat]} throwing out any</span><code class="inline-code rich source"><span class="syntax"><span data-ref="#5isltsdct9fhcrvud9gju8u0l9g0k9d3lelkksea3a8jdgs1uqrs5mm9p7bajj84gg8l9c9jgv9honakghmkb28fucoeb2p4v9ukmu8#d0" class="term-reference" data-ref-type="term">None</span></span></code><span class="word">from applying</span><span class="group"><span class="join"><code class="inline-code rich source"><span class="syntax"><span data-ref="##Nat.fromText" class="term-reference" data-ref-type="term"><span class="fqn"><span class="segment">Nat</span><span class="sep ">.</span><span class="segment">fromText</span></span>
+				</span>
+				</span>
+				</code><span class="word">.</span></span>
+				</span>
+				</span>
+			</p>
+			<p><span class="span"><span class="word">Run it to get our answer (your answer will be different than mine)</span></span>
+			</p>
+			<div class="rich source code ucm"><pre><code><span class="word">run part1 input</span></code></pre></div>
+			<div class="rich source code raw"><pre><code><span class="word">Part1: 1665</span></code></pre></div>
+		</section>
+		<section>
+			<h2><span class="span"><span class="word">Part 2</span></span></h2>
+			<p><span class="span"><span class="word">Part 2 asks us to compare three-element sliding windows instead of single elements.</span></span>
+			</p>
+			<div class="rich source code raw"><pre><code><span class="word">199  A      
+200  A B    
+208  A B C  
+210    B C D
+200  E   C D
+207  E F   D
+240  E F G  
+269    F G H
+260      G H
+263        H</span></code></pre></div>
+			<p><span class="span"><span class="word">Each three-element window is denoted by a letter here. Instead of comparing `199` and `200`, we instead compare window A (`199 + 200 + 208 = 607`) and window B (`200 + 208 + 210 = 618`) to find that the measurements increased from A to B.</span></span>
+			</p>
+			<p><span class="span"><span class="word">We don&#39;t actually care about the sums in the windows and can just check the border elements. For that same example, windows A and B share `200` and `208`, we just check the first measurement in A (`199`) against the last element in B (`210`). Since `210` is greater than `199`, the sum of window B must be greater than the sum of window A.</span></span>
+			</p>
+			<div class="folded-sources">
+				<details open="open" class="folded rich source">
+					<summary class="folded-content folded-summary"><pre><code><span class="syntax"><span data-ref="#hjfejahlquttgnu8lbqe3f4737vcukqkk197pie9g93dmm2a3ium23r1nlpd8978ioftvjutfvierucffc989sds5sh5qqun626bqco" class="local-term term-reference" data-ref-type="term">slidingWindowIncreases</span><span class="blank"> </span><span class="type-ascription-colon">: </span><span class="delimeter-char">[</span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span><span class="delimeter-char">]</span><span class="blank"> </span><span class="type-operator"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span></span></code></pre></summary>
+					<div class="folded-content folded-details"><pre><code><span class="syntax"><span class="hash-qualifier">slidingWindowIncreases</span><span class="type-ascription-colon"> :</span><span class="blank"> </span><span class="delimeter-char">[</span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span><span class="delimeter-char">]</span><span class="blank"> </span><span class="type-operator"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span><span class="blank">
+</span><span class="hash-qualifier">slidingWindowIncreases</span><span class="binding-equals"> =</span><span class="blank">
+</span><span class="blank">  </span><span class="hash-qualifier">go</span><span class="type-ascription-colon"> :</span><span class="blank"> </span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span><span class="blank"> </span><span class="type-operator"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span class="delimeter-char">[</span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span><span class="delimeter-char">]</span><span class="blank"> </span><span class="type-operator"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span><span class="blank">
+</span><span class="blank">  </span><span class="hash-qualifier">go</span><span class="blank"> </span><span class="var">total</span><span class="binding-equals"> =</span><span class="blank"> </span><span class="control-keyword">cases</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="var">a</span><span class="blank"> </span><span class="op cons">+:</span><span class="blank"> </span><span class="var">rest</span><span class="blank"> </span><span class="control-keyword"><span class="arrow">-&gt;</span></span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="use-keyword">use </span><span class="use-prefix">Nat</span><span class="blank"> </span><span class="use-suffix">&lt;</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="control-keyword">match </span><span class="var">rest</span><span class="control-keyword"> with</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="delimeter-char">[</span><span class="delimeter-char">_</span><span class="delimeter-char">, </span><span class="delimeter-char">_</span><span class="delimeter-char">, </span><span class="var">b</span><span class="delimeter-char">]</span><span class="blank"> </span><span class="op concat">++</span><span class="blank"> </span><span class="delimeter-char">_</span><span class="blank"> </span><span class="blank"> </span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="delimeter-char">|</span><span class="blank"> </span><span class="var">a</span><span class="blank"> </span><span data-ref="##Nat.&lt;" class="term-reference" data-ref-type="term">&lt;</span><span class="blank"> </span><span class="var">b</span><span class="blank">      </span><span class="control-keyword"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span class="var">go</span><span class="blank"> </span><span class="parenthesis">(</span><span data-ref="##Nat.increment" class="term-reference" data-ref-type="term"><span class="fqn"><span class="segment">Nat</span><span class="sep ">.</span><span class="segment">increment</span></span></span><span class="blank"> </span><span class="var">total</span><span class="parenthesis">)</span><span class="blank"> </span><span class="var">rest</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="delimeter-char">|</span><span class="control-keyword"> otherwise</span><span class="blank">  </span><span class="control-keyword"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span class="var">go</span><span class="blank"> </span><span class="var">total</span><span class="blank"> </span><span class="var">rest</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="delimeter-char">_</span><span class="blank">              </span><span class="control-keyword"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span class="var">total</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="delimeter-char">_</span><span class="blank">         </span><span class="control-keyword"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span class="var">total</span><span class="blank">
+</span><span class="blank">  </span><span class="var">go</span><span class="blank"> </span><span class="numeric-literal">0</span></span></code></pre></div>
+				</details>
+			</div>
+			<p><span class="span"><span class="word">Slightly different than</span><span class="group"><span class="join"><code class="inline-code rich source"><span class="syntax"><span data-ref="#q2afb20ajv5nesi1le9ak2id70p8gg80udi4ll46eaqns8kulosld05v4t4sfslqgpum4n729g9l01m060vet4ad705vens5fegu6e0" class="local-term term-reference" data-ref-type="term">countIncreases</span></span>
+				</code><span class="word">,</span></span>
+				</span><span class="word">compare the first and fourth elements to see if we should increase the total accumulator as we walk through the list. We return the total that&#39;s been accumulating when there&#39;s less than 4 elements to match against.</span></span>
+			</p>
+			<div class="folded-sources">
+				<details open="open" class="folded rich source">
+					<summary class="folded-content folded-summary"><pre><code><span class="syntax"><span data-ref="#fcqruba3pld7rcdjnkg26bhud2nho5sles6ftprrq89aqp27ms72hvh8ccljnduo0cu8nsmp59s1r95d8ivbvnbau62abqk17e49tr8" class="local-term term-reference" data-ref-type="term"><span class="fqn"><span class="segment">example</span><span class="sep ">.</span><span class="segment">slidingWindowIncreases</span></span></span><span class="blank"> </span><span class="type-ascription-colon">: </span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span></span></code></pre></summary>
+					<div class="folded-content folded-details"><pre><code><span class="syntax"><span class="hash-qualifier"><span class="fqn"><span class="segment">example</span><span class="sep ">.</span><span class="segment">slidingWindowIncreases</span></span></span><span class="type-ascription-colon"> :</span><span class="blank"> </span><span data-ref="##Nat" class="type-reference" data-ref-type="type">Nat</span><span class="blank">
+</span><span class="hash-qualifier"><span class="fqn"><span class="segment">example</span><span class="sep ">.</span><span class="segment">slidingWindowIncreases</span></span></span><span class="binding-equals"> =</span><span class="blank"> </span><span class="numeric-literal">5</span></span></code></pre></div>
+				</details>
+			</div>
+			<div class="source rich eval"><pre><code><div><span class="syntax"><span data-ref="#hjfejahlquttgnu8lbqe3f4737vcukqkk197pie9g93dmm2a3ium23r1nlpd8978ioftvjutfvierucffc989sds5sh5qqun626bqco" class="local-term term-reference" data-ref-type="term">slidingWindowIncreases</span><span class="blank"> </span><span data-ref="#vf168d3r3t1sq4dug4apt6ng1in7a76s8sere4bc3oofc21ki3k4depin6ttd4nsfie8om4mk7c8ourq4orvh6b5d5jd586slck7pm8" class="local-term term-reference" data-ref-type="term">measurements</span><span class="blank">
+</span><span class="blank">  </span><span data-ref="##Nat.==" class="term-reference" data-ref-type="term"><span class="fqn"><span class="segment">Nat</span><span class="sep ">.</span><span class="segment">==</span></span></span><span class="blank"> </span><span data-ref="#fcqruba3pld7rcdjnkg26bhud2nho5sles6ftprrq89aqp27ms72hvh8ccljnduo0cu8nsmp59s1r95d8ivbvnbau62abqk17e49tr8" class="local-term term-reference" data-ref-type="term"><span class="fqn"><span class="segment">example</span><span class="sep ">.</span><span class="segment">slidingWindowIncreases</span></span></span></span><div class="result">⧨<div><span class="syntax"><span class="boolean-literal">true</span></span></div></div></div></code></pre></div>
+			<p><span class="span"><span class="word">Our wrapper function to get our answer is similar to</span><span class="group"><span class="join"><code class="inline-code rich source"><span class="syntax"><span data-ref="#khn86cum1vl2jjindckhse7i9s7nmp20c9a00ralna34t16jbjjldu79vk2qsddc5uek12s7ivsto8o39s4k5aqh36k26ei1j8rcfl0" class="local-term term-reference" data-ref-type="term">part1</span></span>
+				</code><span class="word">:</span></span>
+				</span>
+				</span>
+			</p>
+			<div class="folded-sources">
+				<details open="open" class="folded rich source">
+					<summary class="folded-content folded-summary"><pre><code><span class="syntax"><span data-ref="#g7auhfjp6ba10crohbm13ssuomfo3fddfuukn5c672htf7f2j803grraibcmv34926kre3vncr2p3ir25u8l4kuu9m43nbt03v3oi10" class="local-term term-reference" data-ref-type="term">part2</span><span class="blank"> </span><span class="type-ascription-colon">: </span><span class="delay-force-char">&#39;</span><span class="ability-braces">{</span><span data-ref="##IO" class="type-reference" data-ref-type="type">IO</span><span class="blank">,</span><span class="blank"> </span><span data-ref="#0gbskfd2lhpn1ooc6c397dohqjefpe4d2silhafm8s93e4372lng2i8bcksl9gfe3qnfjisbhdmnc7dill5j7er1t6a1ttb2cvl2rpo" class="type-reference" data-ref-type="type">Exception</span><span class="ability-braces">}</span><span class="blank"> </span><span class="unit">()</span></span></code></pre></summary>
+					<div class="folded-content folded-details"><pre><code><span class="syntax"><span class="hash-qualifier">part2</span><span class="type-ascription-colon"> :</span><span class="blank"> </span><span class="delay-force-char">&#39;</span><span class="ability-braces">{</span><span data-ref="##IO" class="type-reference" data-ref-type="type">IO</span><span class="blank">,</span><span class="blank"> </span><span data-ref="#0gbskfd2lhpn1ooc6c397dohqjefpe4d2silhafm8s93e4372lng2i8bcksl9gfe3qnfjisbhdmnc7dill5j7er1t6a1ttb2cvl2rpo" class="type-reference" data-ref-type="type">Exception</span><span class="ability-braces">}</span><span class="blank"> </span><span class="unit">()</span><span class="blank">
+</span><span class="hash-qualifier">part2</span><span class="binding-equals"> =</span><span class="blank">
+</span><span class="blank">  </span><span class="delay-force-char">&#39;</span><span class="control-keyword">match </span><span class="delay-force-char">!</span><span data-ref="#fd552lhjlav2o9hmmgmbidhoqscvlu358mst81g8umfkk7q4h0koi999e852kqjfalc52fpj95l57j1soq55if0hgrkf57pjdgg2vo8" class="term-reference" data-ref-type="term">getArgs</span><span class="control-keyword"> with</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="delimeter-char">[</span><span class="var">filename</span><span class="delimeter-char">]</span><span class="blank"> </span><span class="control-keyword"><span class="arrow">-&gt;</span></span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="use-keyword">use </span><span class="use-prefix">Text</span><span class="blank"> </span><span class="use-suffix">++</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span data-ref="#sof4q38padq59vc50mcb92s4cs7u42b0f0edr5ugq3jhhsjeavk6647g2jurss0d0778154v1h695arjmfvkimt1gptattb43t2rl38" class="local-term term-reference" data-ref-type="term">fileLines</span><span class="blank"> </span><span class="var">filename</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span data-ref="#cl34qtqcm0rqi571el9sbgtfs9m7dn3iqbogm9be1j2ieht73u2hbr6km9r0c4ahm2u9s8ebdcgk9hbm50orb5stqq2aou6vmb78pg0" class="term-reference" data-ref-type="term">|&gt;</span><span class="blank"> </span><span data-ref="#sgdvo1kgcndsnkucqhcr5gm0dsen6tk3njukcbbl0i6alpbh1no94douq5ilnjjtgqrr2t53e5fj2u007hnpvuodnunstjvouic2u0g" class="term-reference" data-ref-type="term">filterMap</span><span class="blank"> </span><span data-ref="##Nat.fromText" class="term-reference" data-ref-type="term"><span class="fqn"><span class="segment">Nat</span><span class="sep ">.</span><span class="segment">fromText</span></span></span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span data-ref="#cl34qtqcm0rqi571el9sbgtfs9m7dn3iqbogm9be1j2ieht73u2hbr6km9r0c4ahm2u9s8ebdcgk9hbm50orb5stqq2aou6vmb78pg0" class="term-reference" data-ref-type="term">|&gt;</span><span class="blank"> </span><span data-ref="#hjfejahlquttgnu8lbqe3f4737vcukqkk197pie9g93dmm2a3ium23r1nlpd8978ioftvjutfvierucffc989sds5sh5qqun626bqco" class="local-term term-reference" data-ref-type="term">slidingWindowIncreases</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span data-ref="#cl34qtqcm0rqi571el9sbgtfs9m7dn3iqbogm9be1j2ieht73u2hbr6km9r0c4ahm2u9s8ebdcgk9hbm50orb5stqq2aou6vmb78pg0" class="term-reference" data-ref-type="term">|&gt;</span><span class="blank"> </span><span data-ref="##Nat.toText" class="term-reference" data-ref-type="term"><span class="fqn"><span class="segment">Nat</span><span class="sep ">.</span><span class="segment">toText</span></span></span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span data-ref="#cl34qtqcm0rqi571el9sbgtfs9m7dn3iqbogm9be1j2ieht73u2hbr6km9r0c4ahm2u9s8ebdcgk9hbm50orb5stqq2aou6vmb78pg0" class="term-reference" data-ref-type="term">|&gt;</span><span class="blank"> </span><span class="parenthesis">(</span><span data-ref="##Text.++" class="term-reference" data-ref-type="term">++</span><span class="parenthesis">)</span><span class="blank"> </span><span class="text-literal">&quot;Part 2: &quot;</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span class="blank">  </span><span data-ref="#cl34qtqcm0rqi571el9sbgtfs9m7dn3iqbogm9be1j2ieht73u2hbr6km9r0c4ahm2u9s8ebdcgk9hbm50orb5stqq2aou6vmb78pg0" class="term-reference" data-ref-type="term">|&gt;</span><span class="blank"> </span><span data-ref="#cbnnbr9uj7qo2j3k3agqb5vbjamd0fhmmk5a8onsk0gmt4rheh7rvtc8hnettd8239nf539ji9jbp3kjg458fng1rqun5gn9qe3l70o" class="term-reference" data-ref-type="term">printLine</span><span class="blank">
+</span><span class="blank">  </span><span class="blank">  </span><span class="delimeter-char">_</span><span class="blank">          </span><span class="control-keyword"><span class="arrow">-&gt;</span></span><span class="blank"> </span><span data-ref="#cbnnbr9uj7qo2j3k3agqb5vbjamd0fhmmk5a8onsk0gmt4rheh7rvtc8hnettd8239nf539ji9jbp3kjg458fng1rqun5gn9qe3l70o" class="term-reference" data-ref-type="term">printLine</span><span class="blank"> </span><span class="text-literal">&quot;give one argument with input filename&quot;</span></span></code></pre></div>
+				</details>
+			</div>
+			<div class="rich source code ucm"><pre><code><span class="word">run part2 input</span></code></pre></div>
+			<div class="rich source code raw"><pre><code><span class="word">Part2: 1702</span></code></pre></div>
+		</section>
+		<section>
+			<h2><span class="word">Finally</span></h2>
+			<p><span class="span"><span class="word">Finally, we can write a simple wrapper to run</span><code class="inline-code rich source"><span class="syntax"><span data-ref="#khn86cum1vl2jjindckhse7i9s7nmp20c9a00ralna34t16jbjjldu79vk2qsddc5uek12s7ivsto8o39s4k5aqh36k26ei1j8rcfl0" class="local-term term-reference" data-ref-type="term">part1</span></span></code><span class="word">and</span><code class="inline-code rich source"><span class="syntax"><span data-ref="#g7auhfjp6ba10crohbm13ssuomfo3fddfuukn5c672htf7f2j803grraibcmv34926kre3vncr2p3ir25u8l4kuu9m43nbt03v3oi10" class="local-term term-reference" data-ref-type="term">part2</span></span></code><span class="word">directly:</span></span>
+			</p>
+			<div class="folded-sources">
+				<details open="open" class="folded rich source">
+					<summary class="folded-content folded-summary"><pre><code><span class="syntax"><span data-ref="#rpch02hicsth1fpokor3fpvcc0rig8m4mp2rmhbl7utibpkhh65kr34ljjhp4r1sl4chr7b48na83m60epfg0epkm88h6j9h5evdk4o" class="local-term term-reference" data-ref-type="term">main</span><span class="blank"> </span><span class="type-ascription-colon">: </span><span class="delay-force-char">&#39;</span><span class="ability-braces">{</span><span data-ref="##IO" class="type-reference" data-ref-type="type">IO</span><span class="blank">,</span><span class="blank"> </span><span data-ref="#0gbskfd2lhpn1ooc6c397dohqjefpe4d2silhafm8s93e4372lng2i8bcksl9gfe3qnfjisbhdmnc7dill5j7er1t6a1ttb2cvl2rpo" class="type-reference" data-ref-type="type">Exception</span><span class="ability-braces">}</span><span class="blank"> </span><span class="unit">()</span></span></code></pre></summary>
+					<div class="folded-content folded-details"><pre><code><span class="syntax"><span class="hash-qualifier">main</span><span class="type-ascription-colon"> :</span><span class="blank"> </span><span class="delay-force-char">&#39;</span><span class="ability-braces">{</span><span data-ref="##IO" class="type-reference" data-ref-type="type">IO</span><span class="blank">,</span><span class="blank"> </span><span data-ref="#0gbskfd2lhpn1ooc6c397dohqjefpe4d2silhafm8s93e4372lng2i8bcksl9gfe3qnfjisbhdmnc7dill5j7er1t6a1ttb2cvl2rpo" class="type-reference" data-ref-type="type">Exception</span><span class="ability-braces">}</span><span class="blank"> </span><span class="unit">()</span><span class="blank">
+</span><span class="hash-qualifier">main</span><span class="binding-equals"> =</span><span class="blank"> </span><span class="delay-force-char">&#39;</span><span class="control-keyword">let</span><span class="blank">
+</span><span class="blank">  </span><span data-ref="#cbnnbr9uj7qo2j3k3agqb5vbjamd0fhmmk5a8onsk0gmt4rheh7rvtc8hnettd8239nf539ji9jbp3kjg458fng1rqun5gn9qe3l70o" class="term-reference" data-ref-type="term">printLine</span><span class="blank"> </span><span class="text-literal">&quot;Advent of Code 2021, Day 1&quot;</span><span class="blank">
+</span><span class="blank">  </span><span class="delay-force-char">!</span><span data-ref="#khn86cum1vl2jjindckhse7i9s7nmp20c9a00ralna34t16jbjjldu79vk2qsddc5uek12s7ivsto8o39s4k5aqh36k26ei1j8rcfl0" class="local-term term-reference" data-ref-type="term">part1</span><span class="blank">
+</span><span class="blank">  </span><span class="delay-force-char">!</span><span data-ref="#g7auhfjp6ba10crohbm13ssuomfo3fddfuukn5c672htf7f2j803grraibcmv34926kre3vncr2p3ir25u8l4kuu9m43nbt03v3oi10" class="local-term term-reference" data-ref-type="term">part2</span></span></code></pre></div>
+				</details>
+			</div>
+			<div class="rich source code ucm"><pre><code><span class="word">run main input</span></code></pre></div>
+			<div class="rich source code raw"><pre><code><span class="word">Advent of Code 2021, Day 1
+Part1: 1665
+Part2: 1702</span></code></pre></div>
+		</section>
+	</section>
+</article>
+
+    <script>
+      function convertRefsToShareLinks() {
+              document.querySelectorAll(".unison-doc span[data-ref]")
+                .forEach((span) => {
+                        // Don't link refs if they are within an <a> element
+                        // Don't link local refs (manually tagged ;-;)
+                        if (!span.closest("a") && !span.classList.contains('local-term')) {
+                                const ref = span.dataset.ref.replace(/#/g, "@");
+                                const refType = span.dataset.refType;
+
+                                if (ref && refType) {
+                                        let link = document.createElement("a");
+
+                                        link.href = `https://share.unison-lang.org/latest/${refType}s/${ref}`;
+                                        link.target = "_blank";
+                                        link.innerHTML = span.innerHTML;
+                                        link.classList = span.classList;
+
+                                        span.replaceWith(link);
+                                      }
+                              }
+                      });
+            };
+
+      function fixFolded() {
+              function go() {
+                      document.querySelectorAll("details.folded").forEach((oldDetails) => {
+                              const folded = document.createElement("div");
+                              folded.classList = oldDetails.classList;
+
+                              if (!oldDetails.open) {
+                                      folded.classList.add("is-folded");
+                                    }
+
+                              const summary = document.createElement("div");
+                              summary.classList.add("folded-summary");
+                              summary.innerHTML = oldDetails.querySelector(".folded-summary").innerHTML;
+
+                              const details = document.createElement("div");
+                              details.classList.add("folded-details");
+
+                              details.innerHTML = oldDetails.querySelector(".folded-details").innerHTML;
+
+                              const foldedContent = document.createElement("div");
+                              foldedContent.classList.add("folded-content");
+                              foldedContent.appendChild(summary);
+                              foldedContent.appendChild(details);
+
+                              let foldToggle = document.createElement("div");
+                              foldToggle.classList = ["fold-toggle"];
+                              foldToggle.innerHTML = `<span class="fold-icon">▶</span>`;
+
+                              folded.appendChild(foldToggle);
+                              folded.appendChild(foldedContent);
+
+                              oldDetails.replaceWith(folded);
+                            });
+
+                      // Keep replacing details until there are no more left.
+                      if (document.querySelectorAll("details.folded").length) {
+                              go();
+                            }
+                    }
+
+              go();
+
+(() => {
+  const all = document.querySelectorAll.bind(document);
+
+  [...all(".fold-toggle")].forEach((toggle) => {
+    toggle.addEventListener("click", (ev) => {
+            console.log("hello")
+      const folded = ev.currentTarget.parentNode;
+      folded.classList.toggle("is-folded");
+    });
+  });
+})();
+            }
+
+      convertRefsToShareLinks();
+      fixFolded();
+    </script>
+  </body>
